@@ -83,8 +83,9 @@ return [
             ]) : [],
         ],
 
-       'pgsql' => [
+      'pgsql' => [
     'driver' => 'pgsql',
+    'url' => env('DATABASE_URL'), // ✅ THIS IS IMPORTANT
     'host' => env('DB_HOST'),
     'port' => env('DB_PORT', '5432'),
     'database' => env('DB_DATABASE'),
@@ -94,13 +95,6 @@ return [
     'prefix' => '',
     'prefix_indexes' => true,
     'search_path' => 'public',
-
-    'sslmode' => 'require',
-
-    'options' => extension_loaded('pdo_pgsql') ? [
-        // 👇 THIS IS THE REAL FIX
-        'sslmode' => 'require',
-    ] : [],
 ],
 
         'sqlsrv' => [
