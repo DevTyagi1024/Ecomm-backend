@@ -85,17 +85,17 @@ return [
 
        'pgsql' => [
     'driver' => 'pgsql',
-    'host' => env('dpg-xxxxx-a.oregon-postgres.render.com'),
+    'host' => env('DB_HOST'),
     'port' => env('DB_PORT', '5432'),
-    'database' => env('ecomm-db'),
-    'username' => env('ecomm_user'),
-    'password' => env('qOMvkjsZgdtYBFLEIz6WGCGJjJIVb7cO'),
+    'database' => env('DB_DATABASE'),
+    'username' => env('DB_USERNAME'),
+    'password' => env('DB_PASSWORD'),
     'charset' => 'utf8',
     'prefix' => '',
     'prefix_indexes' => true,
     'search_path' => 'public',
 
-    'sslmode' => 'require', // ✅ FORCE SSL
+    'sslmode' => 'require',
 
     'options' => extension_loaded('pdo_pgsql') ? [
         PDO::PGSQL_ATTR_SSL_MODE => 'require',
