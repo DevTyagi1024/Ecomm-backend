@@ -85,11 +85,11 @@ return [
 
        'pgsql' => [
     'driver' => 'pgsql',
-    'host' => env('DB_HOST'),
+    'host' => env('dpg-xxxxx-a.oregon-postgres.render.com'),
     'port' => env('DB_PORT', '5432'),
-    'database' => env('DB_DATABASE'),
-    'username' => env('DB_USERNAME'),
-    'password' => env('DB_PASSWORD'),
+    'database' => env('ecomm-db'),
+    'username' => env('ecomm_user'),
+    'password' => env('qOMvkjsZgdtYBFLEIz6WGCGJjJIVb7cO'),
     'charset' => 'utf8',
     'prefix' => '',
     'prefix_indexes' => true,
