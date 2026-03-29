@@ -1,6 +1,6 @@
 FROM php:8.2-cli
 
-# Install system dependencies (IMPORTANT FIX HERE)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     unzip curl git libzip-dev zip \
     libpq-dev \
@@ -17,4 +17,5 @@ RUN composer install
 
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# ✅ RUN MIGRATION BEFORE START
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
