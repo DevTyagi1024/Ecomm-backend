@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
 {
@@ -17,16 +18,17 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
-        // ✅ Image upload
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('products'), $imageName);
+        // ✅ Upload to Cloudinary
+        $uploadedFile = $request->file('image')->getRealPath();
+        $result = Cloudinary::upload($uploadedFile);
+        $imageUrl = $result->getSecurePath();
 
         // ✅ Save to DB
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
-            'image' => $imageName
+            'image' => $imageUrl
         ]);
 
         return response()->json([
@@ -36,27 +38,17 @@ class ProductController extends Controller
         ]);
     }
 
-
-    // API for product listing
-
+    // ✅ Product list
     public function getProducts(){
-      $product = Product::latest()->get();
+        $product = Product::latest()->get();
 
-       // Add full image URL
-    $product->map(function ($product) {
-       $product->image_url = url('products/' . $product->image);
-        return $product;
-    });
-
-    return response()->json([
-        'status' => true,
-        'products' => $product
-    ]);
+        return response()->json([
+            'status' => true,
+            'products' => $product
+        ]);
     }
 
-
-    // API for the search result page
-
+    // ✅ Search
     public function searchProducts(Request $request)
     {
         $query = $request->query('query');
@@ -72,7 +64,6 @@ class ProductController extends Controller
             ->orWhere('description', 'LIKE', "%{$query}%")
             ->latest()
             ->get();
-
 
         return response()->json([
             'status' => true,
