@@ -44,7 +44,7 @@ class ProductController extends Controller
 
        // Add full image URL
     $product->map(function ($product) {
-        $product->image_url = url('productlist/' . $product->image);
+       $product->image_url = url('products/' . $product->image);
         return $product;
     });
 
